@@ -1,0 +1,59 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+- develop
+
+variables:
+  release.version:
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+- script: |
+    cat metadata.rb | grep ^version | sed 's/[^0-9\.]*//g' | awk '{print "##vso[task.setvariable variable=releaseVersion]"$1}'
+
+- script: |
+    echo cookbook version is $(releaseVersion)
+
+- task: chef-software.vsts-chef-tasks.vsts-chef-task-install-chefdk.vsts-chef-task-install-chefdk@1
+  displayName: 'Install ChefDK'
+
+- script: 'cookstyle .'
+  displayName: cookstyle
+  continueOnError: true
+
+- script: 'foodcritic .'
+  displayName: Foodcritic
+  continueOnError: true
+
+- task: chef-software.vsts-chef-tasks.vsts-chef-task-test-kitchen.vsts-chef-task-test-kitchen@1
+  displayName: 'Execute Test Kitchen: test'
+  inputs:
+    tkAzureEndpoint: 'CHEF-CI (5ab3225d-6b95-4c96-87f1-70c791edea05)'
+    tkKitchenFile: .kitchen.devops.yml
+    tkCommand: test
+    tkPattern: '-c -d always'
+
+- task: GitHubRelease@0
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: 'Create Release on GitHub'
+  inputs:
+    gitHubConnection: claasd
+    repositoryName: 'btc-ag/chef-rabbitmq-win'
+    tagSource: manual
+    tag: '$(releaseVersion)'
+    title: '$(releaseVersion)'
+    addChangeLog: false
+
+- task: chef-software.vsts-chef-tasks.vsts-chef-task-cookbook-publish-supermaket.vsts-chef-task-cookbook-publish-supermaket@1
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: 'Publish cookbook to Supermarket'
+  inputs:
+    chefSupermarketEndpoint: 'chef-supermarket'
+    chefCookbookName: 'rabbitmq-win'
+    chefCookbookPath: '..'

@@ -6,4 +6,8 @@ bin/*
 .bundle/*
 
 .kitchen/
-.kitchen.local.yml
+.kitchen.yml
+
+# Chef
+.chef/
+Berksfile.lock

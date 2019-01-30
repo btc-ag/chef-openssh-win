@@ -1,0 +1,26 @@
+---
+driver:
+  name: azurerm
+  subscription_id: '5ab3225d-6b95-4c96-87f1-70c791edea05'
+  location: 'West Europe'
+  machine_size: 'Standard_D2_v3'
+
+verifier:
+  name: inspec
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: windows2016
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2016-Datacenter-smalldisk:latest
+
+  - name: windows2012R2
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter-smalldisk:latest
+
+suites:
+  - name: default
+    run_list:
+      - recipe[openssh-win]
