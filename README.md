@@ -13,6 +13,7 @@ default['openssh-win']['version'] = '7.9.0.0p1-Beta' # default: 7.9.0.0p1-Beta
 ```
 
 and include the `openssh-win::default` recipe. This will 
+
 * download and unzip OpenSSH for windows to `C:\Program Files\OpenSSH-Win64`
 * add it to the path, 
 * Create the services for sshd and ssh-agent
