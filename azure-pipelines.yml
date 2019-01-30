@@ -44,7 +44,7 @@ steps:
   displayName: 'Create Release on GitHub'
   inputs:
     gitHubConnection: claasd
-    repositoryName: 'btc-ag/chef-rabbitmq-win'
+    repositoryName: 'btc-ag/chef-openssh-win'
     tagSource: manual
     tag: '$(releaseVersion)'
     title: '$(releaseVersion)'
@@ -55,5 +55,5 @@ steps:
   displayName: 'Publish cookbook to Supermarket'
   inputs:
     chefSupermarketEndpoint: 'chef-supermarket'
-    chefCookbookName: 'rabbitmq-win'
+    chefCookbookName: 'openssh-win'
     chefCookbookPath: '..'
