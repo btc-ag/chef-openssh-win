@@ -1,6 +1,6 @@
 # OpenSSH Windows cookbook
 
-[![Build Status](https://dev.azure.com/btcag-chef/openssh-win/_apis/build/status/btc-ag.chef-openssh-win?branchName=master)](https://dev.azure.com/btcag-chef/openssh-win/_build/latest?definitionId=1?branchName=master)
+[![Build Status](https://dev.azure.com/btcag-chef/chef/_apis/build/status/btc-ag.chef-openssh-win?branchName=master)](https://dev.azure.com/btcag-chef/chef/_build/latest?definitionId=5&branchName=master)
 
 This cookbook can be used to install openssh server on windows nodes
 
