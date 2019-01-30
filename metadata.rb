@@ -4,7 +4,7 @@ maintainer_email 'bop-infra@btc-ag.com'
 license 'MIT'
 description 'Installs/Configures openssh server on windows'
 long_description 'Install or Removes OpenSSH server and client on windows'
-version '1.0.0'
+version '1.0.1'
 chef_version '>= 14.7'
 supports 'windows'
 
